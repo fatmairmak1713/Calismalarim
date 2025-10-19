@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatma Irmak Giriş</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0d1117;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px;
+            left: -300px;
+            white-space: nowrap;
+            animation: slideRight 6s linear infinite;
+            font-size: 1.2rem;
+            color: #ff7b00;
+        }
+
+        @keyframes slideRight {
+            0% {
+                left: -300px;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 200px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #ff7b00;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+            button:hover {
+                transform: scale(1.1);
+                background: #ffa94d;
+            }
+
+            button.disabled {
+                background: gray;
+                cursor: not-allowed;
+            }
+
+        .shape {
+            position: absolute;
+            opacity: 0.3;
+            animation: move 10s linear infinite alternate, changeShape 8s infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(100vw, 100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes changeShape {
+            0% {
+                border-radius: 50%;
+            }
+
+            25% {
+                border-radius: 0;
+                transform: rotate(45deg);
+            }
+
+            50% {
+                border-radius: 20%;
+            }
+
+            75% {
+                clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            }
+
+            100% {
+                border-radius: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Fatma Irmak Kim</h1>
+
+    <div class="container">
+        <h2>Kayıt Ol</h2>
+        <input type="text" id="username" placeholder="Adınızı girin">
+        <input type="password" id="password" placeholder="Şifrenizi girin">
+        <button id="signup" class="disabled">Sign Up</button>
+    </div>
+
+    <script>
+        const shapes = [];
+        for (let i = 0; i < 10; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('shape');
+            shape.style.width = `${80 + Math.random() * 120}px`;
+            shape.style.height = shape.style.width;
+            shape.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            shape.style.top = `${Math.random() * 100}vh`;
+            shape.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(shape);
+            shapes.push(shape);
+        }
+
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const signup = document.getElementById('signup');
+
+        document.addEventListener('mousemove', (e) => {
+            if (!signup.classList.contains('disabled')) return;
+            const rect = signup.getBoundingClientRect();
+            const distance = Math.hypot(
+                rect.x + rect.width / 2 - e.clientX,
+                rect.y + rect.height / 2 - e.clientY
+            );
+            if (distance < 120) {
+                signup.style.transform = `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px)`;
+            }
+        });
+
+        function checkInputs() {
+            if (username.value && password.value) {
+                signup.classList.remove('disabled');
+                signup.onclick = () => window.open("welcome.html", "_blank");
+            }
+        }
+
+        username.addEventListener('input', checkInputs);
+        password.addEventListener('input', checkInputs);
+    </script>
+</body>
+</html>
