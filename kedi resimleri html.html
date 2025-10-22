@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover Galeri</title>
+  <style>
+    body {
+      background-color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      width: 800px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .card {
+      height: 300px;
+      flex: 1;
+      transition: 0.7s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      flex: 3;
+    }
+
+    h1{
+
+       
+        color:white;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+    <h1>EMOJİLER</h1> <br>
+  <div class="container">
+    <div class="card"><img src="https://i.pinimg.com/736x/77/09/5f/77095f053921bee954460429618973db.jpg" alt="Resim 1"></div>
+    <div class="card"><img src="https://i.pinimg.com/736x/73/d6/eb/73d6eb5610b84aec3462c5afa35265c1.jpg" alt="Resim 2"></div>
+    <div class="card"><img src="https://i.pinimg.com/736x/7e/0f/fb/7e0ffb629cc07f584634326a4aa7ebb6.jpg" alt="Resim 3"></div>
+    <div class="card"><img src= "https://i.pinimg.com/736x/b0/49/f8/b049f875eee3ea6683efb9b3d54cde52.jpg"alt="Resim 4"></div>
+    <div class="card"><img src="https://i.pinimg.com/736x/cc/01/a6/cc01a67d3c57d29a5448ecc14a83e7fd.jpg" alt="Resim 5"></div>
+  </div>
+</body>
+</html>
