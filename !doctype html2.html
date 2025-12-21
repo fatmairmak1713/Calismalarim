@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Figma-Style Memory Game</title>
+<style>
+  /* ---------- Reset & tipografi ---------- */
+  :root{
+    --bg1: linear-gradient(135deg,#0f1724 0%, #0b1220 50%, #071225 100%);
+    --card-bg: rgba(255,255,255,0.06);
+    --glass: rgba(255,255,255,0.04);
+    --accent: #6ee7b7;
+    --accent-2: #8b5cf6;
+    --glass-border: rgba(255,255,255,0.06);
+    --glass-blur: 8px;
+    --glass-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    --glass-radius: 16px;
+    --glass-padding: 18px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background: var(--bg1);
+    color: #e6eef8;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+  }
+
+  /* ---------- Frame (card) ---------- */
+  .frame{
+    width:980px;
+    max-width:96vw;
+    min-height:640px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:20px;
+    padding:28px;
+    box-shadow: 0 10px 50px rgba(2,8,23,0.7);
+    position:relative;
+    overflow:hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px) saturate(120%);
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    gap:24px;
+  }
+
+  /* subtle animated blobs for Figma-like feel */
+  .frame::before, .frame::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    filter: blur(60px);
+    opacity:0.16;
+    transform: translateZ(0);
+  }
+  .frame::before{
+    width:480px;height:480px;
+    right:-120px; top:-120px;
+    background: radial-gradient(circle at 30% 30%, var(--accent-2), transparent 40%);
+    mix-blend-mode: screen;
+  }
+  .frame::after{
+    width:420px;height:420px;
+    left:-140px; bottom:-120px;
+    background: radial-gradient(circle at 70% 70%, var(--accent), transparent 40%);
+    mix-blend-mode: screen;
+  }
+
+  /* ---------- Sidebar (game info) ---------- */
+  .sidebar{
+    padding:var(--glass-padding);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: var(--glass-radius);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    min-height:520px;
+  }
+  .title{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .logo{
+    width:56px;height:56px;border-radius:12px;
+    background: linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;
+    font-weight:700;color:#06202a;
+    box-shadow: 0 6px 20px rgba(140,92,246,0.18);
+    transform: translateY(-2px);
+  }
+  h1{font-size:18px;margin:0}
+  p.lead{margin:0;color:#bcd8ea88;font-size:13px}
+
+  .stats{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:12px;
+  }
+  .stat{
+    background: var(--card-bg);
+    padding:12px;border-radius:12px;
+    border:1px solid rgba(255,255,255,0.03);
+    display:flex;flex-direction:column;
+  }
+  .stat .label{font-size:12px;color:#bcd8ea88}
+  .stat .value{font-size:18px;font-weight:600;margin-top:6px}
+
+  .controls{
+    margin-top:auto;
+    display:flex;gap:10px;
+  }
+  .btn{
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.04);
+    padding:10px 14px;border-radius:12px;
+    cursor:pointer;font-weight:600;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s;
+  }
+  .btn:hover{ transform: translateY(-4px); box-shadow: 0 10px 30px rgba(2,6,23,0.72); }
+  .btn.primary{
+    background: linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#06202a;border:none;
+  }
+
+  /* ---------- Game area ---------- */
+  .game{
+    padding:24px;
+    border-radius: var(--glass-radius);
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: var(--glass-shadow);
+    min-height:520px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .hud{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;
+  }
+  .progress{
+    height:12px;border-radius:10px; background: rgba(255,255,255,0.03);
+    overflow:hidden;flex:1;margin-left:12px;
+  }
+  .progress > i{display:block;height:100%;width:0%;background: linear-gradient(90deg,var(--accent),var(--accent-2)); transition: width .5s ease;}
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:14px;
+    margin-top:8px;
+    align-self:center;
+    width:100%;
+    max-width:760px;
+  }
+
+  .card{
+    background: transparent;
+    height:120px;border-radius:12px;
+    perspective:1000px;
+    cursor:pointer;
+    position:relative;
+  }
+
+  .card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition: transform .55s cubic-bezier(.2,.9,.3,1);
+    border-radius: inherit;
+    box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+  }
+  .card.flipped .card-inner{ transform: rotateY(180deg); }
+
+  .card-face{
+    position:absolute;inset:0;border-radius:inherit;
+    backface-visibility:hidden;display:grid;place-items:center;
+    overflow:hidden;
+  }
+
+  .card-front{
+    background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .card-back{
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  /* icons inside cards (SVG placeholders) */
+  .card .icon{
+    width:56px;height:56px;
+    display:grid;place-items:center;
+    font-weight:700;
+  }
+  .card .emoji{ font-size:34px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); }
+
+  /* matched state */
+  .card.matched .card-inner{ transform: scale(0.98) rotateY(180deg); opacity:0.7; filter:grayscale(.2) saturate(1.1); }
+  .card.matched{ cursor:default; pointer-events:none; }
+
+  /* small responsive */
+  @media (max-width:880px){
+    .frame{ grid-template-columns: 1fr; padding:18px; min-height:640px;}
+    .grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width:520px){
+    .grid{ grid-template-columns: repeat(2, 1fr); gap:10px; }
+    .card{ height:100px; }
+  }
+
+  /* micro interactions */
+  .pulse {
+    animation: pulse 1.8s infinite;
+    opacity:0.95;
+  }
+  @keyframes pulse {
+    0%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-6px) scale(1.02); }
+    100%{ transform: translateY(0) scale(1); }
+  }
+
+  /* tiny tooltip-like hint */
+  .hint{
+    font-size:12px;color:#bcd8ea88;background:rgba(255,255,255,0.02);
+    padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+    display:inline-block;
+  }
+
+  /* result overlay */
+  .overlay{
+    position:absolute;inset:0;display:grid;place-items:center;
+    background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.7));
+    z-index:12;opacity:0;pointer-events:none;transition:opacity .25s;
+  }
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .overlay .panel{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:28px;border-radius:14px;border:1px solid rgba(255,255,255,0.04);
+    text-align:center; min-width:320px;
+  }
+  .small{font-size:13px;color:#bcd8eaaa}
+</style>
+</head>
+<body>
+  <div class="frame" role="application" aria-label="EŞİNİ BUL">
+    <div class="sidebar" aria-hidden="false">
+      <div class="title">
+        <div class="logo">FIA</div>
+        <div>
+          <h1>Eşini Bul Ve Kazan</h1>
+          <p class="lead"> Eşini bul ve Puan Kazan!
+oluşturan;FATMA IRMAK KİM? </p>
+        </div>
+      </div>
+
+      <div class="stats" aria-hidden="false">
+        <div class="stat">
+          <div class="label">Zaman</div>
+          <div class="value" id="time">00:00</div>
+        </div>
+        <div class="stat">
+          <div class="label">Hamle</div>
+          <div class="value" id="moves">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">Seviye</div>
+          <div class="value" id="level">1</div>
+        </div>
+        <div class="stat">
+          <div class="label">En iyi skor</div>
+          <div class="value" id="best">—</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="hint">İpucu: Hızlı eşleştirirsen bonus alırsın.</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="restart">Yeniden Başlat</button>
+        <button class="btn primary" id="nextLevel">Sonraki Seviye</button>
+      </div>
+
+      <div style="font-size:12px;color:#bcd8ea88;margin-top:12px">
+        <div>Küçük proje — portfolyo için uygundur.</div>
+        <div style="margin-top:8px" class="small">Kaydedilen skor tarayıcıya kayıtlıdır (localStorage).</div>
+      </div>
+    </div>
+
+    <main class="game" role="main" aria-live="polite">
+      <div class="hud">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-weight:700">Oyun Alanı</div>
+          <div style="font-size:13px;color:#bcd8ea88">Eşleşecek kartları çevir.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;width:40%;">
+          <div style="font-size:13px;color:#bcd8ea88">Progres</div>
+          <div class="progress" aria-hidden="false"><i id="progressFill"></i></div>
+        </div>
+      </div>
+
+      <div class="grid" id="grid" role="grid" aria-label="Kart ızgarası">
+        <!-- kartlar JS ile eklenecek -->
+      </div>
+    </main>
+
+    <div class="overlay" id="overlay" role="status" aria-hidden="true">
+      <div class="panel" id="overlayPanel">
+        <h2 id="overlayTitle">Tebrikler!</h2>
+        <p id="overlayText" class="small">Seviye tamamlandı.</p>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+          <button class="btn" id="overlayRestart">Tekrar</button>
+          <button class="btn primary" id="overlayNext">Sonraki</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/*
+  Figma-style Memory Game
+  - Tek dosya (HTML/CSS/JS)
+  - Seviye sistemi: seviye arttıkça eş sayısı artar
+  - localStorage ile en iyi skor tutulur (zaman + hamle ağırlıklı)
+*/
+
+const EMOJIS = ["🍉","🍓","🍊","🍇","🥑","🍋","🍍","🍒","🍪","🍩","🍫","🥕"];
+// shuffle helper
+const randShuffle = arr => arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(a=>a[1]);
+
+// DOM
+const grid = document.getElementById('grid');
+const movesEl = document.getElementById('moves');
+const timeEl = document.getElementById('time');
+const levelEl = document.getElementById('level');
+const bestEl = document.getElementById('best');
+const progressFill = document.getElementById('progressFill');
+const overlay = document.getElementById('overlay');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlayText = document.getElementById('overlayText');
+
+const restartBtn = document.getElementById('restart');
+const nextLevelBtn = document.getElementById('nextLevel');
+const overlayRestart = document.getElementById('overlayRestart');
+const overlayNext = document.getElementById('overlayNext');
+
+let level = 1;
+let pairs = 6; // başlangıç
+let first = null, second = null;
+let board = [];
+let moves = 0;
+let matched = 0;
+let timer = null;
+let seconds = 0;
+let busy = false;
+
+// best score format: {score:number, label:string}
+function loadBest(){
+  const raw = localStorage.getItem('fs_memory_best_v1');
+  if(!raw){ bestEl.textContent = '—'; return null;}
+  try{
+    const obj = JSON.parse(raw);
+    bestEl.textContent = obj.label;
+    return obj;
+  }catch(e){ bestEl.textContent = '—'; return null;}
+}
+
+function saveBest(obj){
+  localStorage.setItem('fs_memory_best_v1', JSON.stringify(obj));
+  loadBest();
+}
+
+function resetTimer(){
+  clearInterval(timer); seconds = 0;
+  timeEl.textContent = `00:00`;
+}
+function startTimer(){
+  resetTimer();
+  timer = setInterval(()=>{
+    seconds++;
+    const mm = String(Math.floor(seconds/60)).padStart(2,'0');
+    const ss = String(seconds%60).padStart(2,'0');
+    timeEl.textContent = `${mm}:${ss}`;
+  }, 1000);
+}
+
+function formatTimeLabel(){
+  const mm = Math.floor(seconds/60), ss = seconds%60;
+  return `${mm}m ${ss}s`;
+}
+
+function computeScore(){
+  // daha az zaman ve hamle = daha iyi
+  // basit formül: 10000 / (seconds * 1.5 + moves * 2 + level*10)
+  const score = Math.max(0, Math.round(10000 / (seconds*1.5 + moves*2 + level*8)));
+  return score;
+}
+
+function createBoard(){
+  grid.innerHTML = '';
+  first = second = null; board = []; matched = 0; moves = 0;
+  movesEl.textContent = moves;
+  levelEl.textContent = level;
+  const emojiCount = Math.min(EMOJIS.length, pairs);
+  const chosen = randShuffle(EMOJIS).slice(0, emojiCount);
+  const pairArr = randShuffle([...chosen, ...chosen]);
+  board = pairArr.map((value, idx) => ({id: idx, value, matched:false}));
+  // render
+  board.forEach(item => {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.setAttribute('data-id', item.id);
+    card.setAttribute('aria-label','kart');
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="icon">
+            <svg viewBox="0 0 120 120" width="44" height="44" aria-hidden="true">
+              <defs><linearGradient id="g${item.id}" x1="0" x2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.06"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/></linearGradient></defs>
+              <rect x="8" y="14" rx="12" ry="12" width="104" height="92" fill="url(#g${item.id})" />
+            </svg>
+          </div>
+        </div>
+        <div class="card-face card-back">
+          <div class="icon emoji">${item.value}</div>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', onCardClick);
+    grid.appendChild(card);
+  });
+
+  // progress width reset
+  progressFill.style.width = `${(matched/(pairs))*100}%`;
+}
+
+function onCardClick(e){
+  if(busy) return;
+  const btn = e.currentTarget;
+  const id = Number(btn.getAttribute('data-id'));
+  const idx = board.findIndex(b=>b.id===id);
+  if(board[idx].matched) return;
+  const cardEl = btn;
+  // flip
+  if(cardEl.classList.contains('flipped')) return;
+  cardEl.classList.add('flipped');
+  if(!first){
+    first = {idx, el:cardEl};
+    // start timer on first move
+    if(moves===0 && seconds===0){ startTimer(); }
+    return;
+  }
+  if(!second && first.idx !== idx){
+    second = {idx, el:cardEl};
+    moves++;
+    movesEl.textContent = moves;
+    busy = true;
+    // compare
+    if(board[first.idx].value === board[second.idx].value){
+      // matched
+      setTimeout(()=>{
+        board[first.idx].matched = board[second.idx].matched = true;
+        first.el.classList.add('matched'); second.el.classList.add('matched');
+        matched++;
+        progressFill.style.width = `${(matched/pairs)*100}%`;
+        first = second = null;
+        busy = false;
+        // level complete?
+        if(matched >= pairs){
+          onLevelComplete();
+        }
+      }, 420);
+    }else{
+      // not matched
+      setTimeout(()=>{
+        first.el.classList.remove('flipped');
+        second.el.classList.remove('flipped');
+        first = second = null;
+        busy = false;
+      }, 820);
+    }
+  }
+}
+
+function onLevelComplete(){
+  clearInterval(timer);
+  const score = computeScore();
+  const label = `${score} pts — ${formatTimeLabel()} / ${moves} hamle`;
+  overlayTitle.textContent = 'Tebrikler!';
+  overlayText.textContent = `Seviyeyi tamamladın — skor: ${label}`;
+  overlay.classList.add('show'); overlay.setAttribute('aria-hidden','false');
+
+  const best = loadBest();
+  if(!best || score > best.score){
+    saveBest({score, label});
+    overlayTitle.textContent = 'Yeni Rekor! 🎉';
+  }
+}
+
+function startLevel(newLevel){
+  level = newLevel || level;
+  pairs = 4 + (level + 1); // seviye arttıkça pair sayısı artar (ör: seviye1->6, seviye2->7)
+  // cap to available emojis* to avoid duplicates too many times
+  pairs = Math.min(pairs, EMOJIS.length);
+  resetTimer();
+  loadBest();
+  createBoard();
+  overlay.classList.remove('show'); overlay.setAttribute('aria-hidden','true');
+}
+
+// controls
+restartBtn.addEventListener('click', ()=> {
+  startLevel(level);
+});
+nextLevelBtn.addEventListener('click', ()=> {
+  level++; startLevel(level);
+});
+overlayRestart.addEventListener('click', ()=> {
+  startLevel(1); level = 1;
+});
+overlayNext.addEventListener('click', ()=> {
+  level++; startLevel(level);
+});
+
+// initialize
+loadBest();
+startLevel(1);
+
+// keyboard accessibility: R restart, N next
+document.addEventListener('keydown', (e)=>{
+  if(e.key.toLowerCase() === 'r') startLevel(level);
+  if(e.key.toLowerCase() === 'n') { level++; startLevel(level); }
+});
+</script>
+</body>
+</html>

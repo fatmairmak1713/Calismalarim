@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kedi Temalı Portföy</title>
+<link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: 'Rethink Sans', sans-serif;
+    background: linear-gradient(135deg, #f8e9d2, #f0c1c1);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background-color: #fff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  header h1 { 
+    font-size: 1.8em;
+    color: #4b2e05;
+    animation: wave 2s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  nav a {
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    color: #555;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: #0073ff; }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .profile-img {
+    width: 200px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+    cursor: pointer;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  h2 { font-size: 2em; margin-bottom: 15px; }
+
+  p { font-size: 1.1em; margin-bottom: 20px; max-width: 600px; }
+
+  button {
+    background-color: #0073ff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  button:hover {
+    background-color: #005bb5;
+    transform: scale(1.05);
+  }
+
+  footer {
+    background-color: #fff;
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  }
+
+  @media(max-width:768px){
+    header, main { padding: 20px; }
+    .profile-img { width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kedi Portföyüm 🐱</h1>
+  <nav>
+    <a href="#about">Hakkımda</a>
+    <a href="#projects">Projeler</a>
+    <a href="#contact">İletişim</a>
+  </nav>
+</header>
+
+<main>
+  <img src="https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg" 
+       alt="Kedi" class="profile-img" id="catImage">
+  <h2>Merhaba! Ben Dema Lang</h2>
+  <p>Bu portföyde hem kedi temalı hem de modern ve profesyonel tasarım öğeleri bulabilirsiniz. Çeşitli projelerim ve ASMR videosu ile interaktif deneyimler sunuyorum.</p>
+  <button id="asmrBtn">Kedi ASMR Dinle 🎧</button>
+</main>
+
+<footer>
+  &copy; 2025 Dema Lang | Tüm Hakları Saklıdır
+</footer>
+
+<script>
+  // Kedi resmine tıklayınca video açılır
+  document.getElementById('catImage').addEventListener('click', function() {
+    window.open('https://www.youtube.com/watch?v=ZkQpO2YfA2s','_blank');
+  });
+
+  document.getElementById('asmrBtn').addEventListener('click', function() {
+    window.open('https://www.youtube.com/watch?v=ZkQpO2YfA2s','_blank');
+  });
+</script>
+
+</body>
+</html>
+
+
