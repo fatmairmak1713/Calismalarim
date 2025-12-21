@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>div uygulamasi</title>
+</head>
+<style>
+#koy {
+  border: 10px ridge rgb(80, 61, 61);      /* Koyu tonlarda kalın dekoratif kenarlık */
+  width: 260px;                            /* Div genişliği */
+  height: 130px;                           /* Div yüksekliği */
+  background: rgba(4, 78, 15, 0.15);       /* Hafif şeffaf yeşilimsi arka plan */
+  border-radius: 40px;                     /* Köşeleri yuvarlatma */
+  color: #772727;                          /* Yazı rengi */
+  font-size: 1.3rem;                       /* Yazı boyutu */
+  font-weight: bold;                       /* Yazıyı kalın yapar */
+  display: flex;                           /* İçeriği ortalamak için flex kullanımı */
+  justify-content: center;                 /* Yatayda ortalama */
+  align-items: center;                     /* Dikeyde ortalama */
+  border: 1px solid rgba(0, 0, 0, 0.2);    /* Şeffaf ince dış çerçeve */
+  animation: float 4s ease-in-out infinite;/* Yukarı-aşağı süzülen animasyon */
+  transition: transform 0.4s ease, 
+              box-shadow 0.4s ease;        /* Hover geçişlerinin yumuşak olması */
+}
+#koy {
+  transform: translateY(-12px) scale(1.06);/* Div’in hafif yukarı taşınması + büyütme */
+  box-shadow: 0 25px 45px rgba(255, 5, 5, 0.25); /* Kırmızımsı gölge efekti */
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);            /* Başlangıç: normal konum */
+  }
+  50% {
+    transform: translateY(-10px);          /* Ortada: yukarı doğru hareket */
+  }
+  100% {
+    transform: translateY(0px);            /* Bitiş: tekrar aşağı iner */
+  }
+}
+</style>
+<body>
+  <div id="koy">FATMA IRMAK</div>   <!-- Metin kutusunun kendisi -->
+
+</body>
+</html>
