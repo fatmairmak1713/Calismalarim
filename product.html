@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ürün Detay</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b0f1a;
+  color:white;
+  padding:20px;
+}
+
+.container{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.img-box img{
+  width:320px;
+  border-radius:15px;
+}
+
+.info{
+  max-width:500px;
+}
+
+button{
+  padding:12px 18px;
+  margin-top:10px;
+  margin-right:10px;
+  border:none;
+  border-radius:10px;
+  background:#1b2a4a;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  background:#304b82;
+}
+
+.review{
+  background:#111c33;
+  padding:15px;
+  margin:10px 0;
+  border-radius:12px;
+}
+
+input{
+  width:100%;
+  max-width:500px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.price{
+  color:#4dff88;
+}
+
+.heart-active{
+  transform:scale(1.3);
+  transition:0.2s;
+  color:red;
+}
+
+</style>
+</head>
+
+<body onload="checkLogin(); loadProduct(); loadComments();">
+
+<div class="container">
+
+  <div class="img-box">
+    <img id="img">
+  </div>
+
+  <div class="info">
+
+    <h1 id="name"></h1>
+
+    <h2 class="price" id="price"></h2>
+
+    <p>Premium kalite modern gözlük modeli.</p>
+
+    <button onclick="addToCart()">
+      🛒 Sepete Ekle
+    </button>
+
+    <button onclick="addFav(this)">
+      ❤️ Favori
+    </button>
+
+    <button onclick="translateComments()">
+      🌍 Çevir
+    </button>
+
+  </div>
+
+</div>
+
+<hr>
+
+<h2>Yorumlar ⭐</h2>
+
+<input id="comment" placeholder="Yorum yaz...">
+<button onclick="addComment()">Gönder</button>
+
+<div id="comments"></div>
+
+<script>
+
+let product;
+
+/* 🔐 LOGIN */
+function checkLogin(){
+
+  if(localStorage.getItem("loggedIn") !== "true"){
+    alert("❌ Giriş yapmalısın!");
+    window.location.href = "login.html";
+  }
+}
+
+/* 📦 ÜRÜN */
+function loadProduct(){
+
+  product = JSON.parse(localStorage.getItem("product"));
+
+  if(!product){
+    alert("Ürün bulunamadı!");
+    window.location.href = "products.html";
+    return;
+  }
+
+  document.getElementById("img").src = product.img;
+  document.getElementById("name").textContent = product.name;
+  document.getElementById("price").textContent = "₺" + product.price;
+}
+
+/* 🛒 SEPET */
+function addToCart(){
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if(cart.find(x=>x.id===product.id)){
+    alert("Zaten sepette");
+    return;
+  }
+
+  cart.push({...product, qty:1});
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Sepete eklendi ✔");
+}
+
+/* ❤️ FAVORİ */
+function addFav(btn){
+
+  let favs = JSON.parse(localStorage.getItem("favs")) || [];
+
+  if(favs.find(x=>x.id===product.id)){
+    alert("Zaten favoride");
+    return;
+  }
+
+  favs.push(product);
+
+  localStorage.setItem("favs", JSON.stringify(favs));
+
+  btn.classList.add("heart-active");
+  setTimeout(()=>btn.classList.remove("heart-active"),300);
+
+  alert("Favorilere eklendi ❤️");
+}
+
+/* 🔑 COMMENT KEY */
+function getKey(){
+  return "comments_" + product.id;
+}
+
+/* 💬 YORUM EKLE */
+function addComment(){
+
+  let text = document.getElementById("comment").value.trim();
+  if(!text) return;
+
+  let comments = JSON.parse(localStorage.getItem(getKey())) || [];
+
+  comments.push({
+    user: localStorage.getItem("user") || "Anonim",
+    text,
+    likes:0,
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem(getKey(), JSON.stringify(comments));
+
+  document.getElementById("comment").value = "";
+  loadComments();
+}
+
+/* ⭐ YORUMLAR */
+function loadComments(){
+
+  let comments = JSON.parse(localStorage.getItem(getKey())) || [];
+  let box = document.getElementById("comments");
+
+  box.innerHTML = "";
+
+  comments.forEach((c,i)=>{
+
+    box.innerHTML += `
+      <div class="review">
+        ⭐ <b>${c.user}</b> <small>${c.date}</small>
+        <p>${c.text}</p>
+
+        <button onclick="like(${i})">
+          ❤️ ${c.likes}
+        </button>
+      </div>
+    `;
+  });
+}
+
+/* ❤️ LIKE */
+function like(i){
+
+  let comments = JSON.parse(localStorage.getItem(getKey()));
+
+  comments[i].likes++;
+
+  localStorage.setItem(getKey(), JSON.stringify(comments));
+
+  loadComments();
+}
+
+/* 🌍 ÇEVİR */
+async function translateComments(){
+
+  let lang = localStorage.getItem("lang") || "tr";
+
+  let comments = JSON.parse(localStorage.getItem(getKey())) || [];
+
+  let newC = [];
+
+  for(let c of comments){
+
+    let text = lang === "tr" ? c.text : await translateText(c.text);
+
+    newC.push({...c, text});
+  }
+
+  localStorage.setItem(getKey(), JSON.stringify(newC));
+
+  loadComments();
+}
+
+/* 🌍 API */
+async function translateText(text){
+
+  let lang = localStorage.getItem("lang") || "tr";
+
+  let res = await fetch(
+    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl="
+    + lang + "&dt=t&q=" + encodeURIComponent(text)
+  );
+
+  let data = await res.json();
+
+  return data[0][0][0];
+}
+
+</script>
+
+</body>
+</html>

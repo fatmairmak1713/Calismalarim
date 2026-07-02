@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="products.html">Ürünler</a>
+    <a href="login.html">Giriş</a>
+  </nav>
+  <div class="container">
+
+    <div class="card">
+
+      <div class="toggle">
+        <button onclick="showLogin()">Giriş</button>
+        <button onclick="showRegister()">Kayıt</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="loginBox" class="form active">
+        <h2>Giriş Yap</h2>
+
+        <input type="email" id="email" placeholder="Email">
+
+        <div class="password-box">
+          <input type="password" id="password" placeholder="Şifre">
+          <span onclick="togglePassword('password', this)">👁️</span>
+        </div>
+
+        <button onclick="login()">Giriş Yap</button>
+      </div>
+
+      <select id="langSelect">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="it">Italiano</option>
+        <option value="ru">Русский</option>
+        <option value="ar">العربية</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+      </select>
+      <!-- REGISTER -->
+      <div id="registerBox" class="form">
+        <h2>Kayıt Ol</h2>
+
+        <input type="email" id="regEmail" placeholder="Email">
+
+        <div class="password-box">
+          <input type="password" id="regPass" placeholder="Şifre">
+          <span onclick="togglePassword('regPass', this)">👁️</span>
+        </div>
+
+        <button onclick="register()">Kayıt Ol</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

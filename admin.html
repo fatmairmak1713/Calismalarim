@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🧠 Admin Panel</h1>
+
+<input id="name" placeholder="Ürün">
+<input id="price" placeholder="Fiyat">
+<input id="stock" placeholder="Stok">
+
+<button onclick="add()">Ekle</button>
+
+<div id="list"></div>
+
+<script type="module">
+import { addProduct, getProducts, deleteProduct } from "./product.js";
+
+window.add = async ()=>{
+  await addProduct({
+    name:name.value,
+    price:+price.value,
+    stock:+stock.value
+  });
+
+  render();
+};
+
+async function render(){
+  let data = await getProducts();
+
+  list.innerHTML = data.map(p=>`
+    <div>
+      ${p.name} - ${p.stock}
+      <button onclick="del('${p.id}')">Sil</button>
+    </div>
+  `).join("");
+}
+
+window.del = async (id)=>{
+  await deleteProduct(id);
+  render();
+};
+
+render();
+</script>
+
+</body>
+</html>

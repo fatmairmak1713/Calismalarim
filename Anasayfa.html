@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Avşar Optik</title>
+    <link rel="icon" type="image/png" href="ChatGPT Image 25 Nis 2026 18_41_55.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+
+        }
+
+        body {
+            background-color: black;
+        }
+
+        #logo:hover {
+            transform: scale(1.05) translateY(-3px);
+        }
+
+        #logo {
+            height: 75px;
+            width: 75px;
+            transition: 0.4s ease;
+        }
+
+        #cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+            background: black;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #cookie-banner button {
+            margin: 5px;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #accept-btn {
+            background: #0000cc;
+            color: rgb(255, 255, 255);
+        }
+
+        #reject-btn {
+            background: #ff8c1a;
+            color: rgb(0, 0, 0);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: black;
+            color: white;
+            padding: 15px;
+        }
+
+        .cart-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff8c1a;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 7px;
+            font-size: 12px;
+        }
+
+        #cart-box {
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: white;
+            color: black;
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .hidden {
+            display: none;
+
+            #cart-items li {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+            }
+        }
+
+        #cart-items button {
+            background: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            padding: 2px 6px;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 400px;
+        }
+
+        .carousel-control-prev-icon {
+            background-image: none;
+            color: black;
+        }
+
+        .carousel-control-next-icon {
+            background-image: none;
+            color: black;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background: rgb(172, 172, 172);
+        }
+
+        .carousel-control-prev-icon {
+            background-image: none;
+        }
+
+        .carousel-control-next-icon {
+            background-image: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="Anasayfa.html">
+                    <img id="logo" src="ChatGPT Image 25 Nis 2026 18_41_55.png" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Anasayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Gözlüklerimiz</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Hakkımızda
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">İletişim</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Kullanıcı Sözleşmesi</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Sıkça Sorulan Sorular</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Arama Kısmı" aria-label="Search" />
+                        <button class="btn btn-outline-primary" type="submit">Ara</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <main>
+        <div class="navbar">
+            <h1>GÖZLÜKLERİMİZ</h1>
+            <div class="cart-container">
+                <span class="cart-icon" onclick="toggleCart()">🛒</span>
+                <span id="cart-count">0</span>
+
+                <div id="cart-box" class="hidden">
+                    <ul id="cart-items"></ul>
+                    <p>Toplam: <span id="total">0</span> ₺</p>
+                </div>
+            </div>
+        </div>
+        <!-- Örnek ürün -->
+        <button onclick="addToCart('Gözlük', 500)">Sepete Ekle</button>
+        <div id="cookie-banner">
+            <p>Eğer Çerezleri Kabul Ederseniz Size Göre Hareket Ederiz. Teşekkürler(☆◡☆)</p>
+            <button id="accept-btn">Kabul Et</button>
+            <button id="reject-btn">Reddet</button>
+        </div>
+        <div class="container rounded-3">
+
+            <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="2757400-2560x1414-desktop-hd-glasses-wallpaper-photo.jpg"
+                            class="d-block w-100 rounded-5" alt="gözlük resmi">
+
+                    </div>
+                    <div class="carousel-item">
+                        <img src="2618077-3840x2160-desktop-4k-vr-glasses-background-photo.jpg"
+                            class="d-block w-100 rounded-5" alt="gözlük resmi">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="2618283-3840x2160-desktop-4k-vr-glasses-wallpaper-photo.jpg"
+                            class="d-block w-100 rounded-5" alt="gözlük resmi">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="prev">
+                    <span style="font-size:30px; color:black;"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="next">
+                    <span style="font-size:30px; color:black;"></span>
+                </button>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        setInterval(() => {
+            document.title = document.title === "AVSAR OPTİK"
+                ? "❗Gözlüklerimizde indirim var!❗"
+                : "AVSAR OPTİK";
+        }, 800);
+
+
+
+        const banner = document.getElementById("cookie-banner");
+        const acceptBtn = document.getElementById("accept-btn");
+        const rejectBtn = document.getElementById("reject-btn");
+
+
+
+        // Kabul
+        acceptBtn.onclick = () => {
+            localStorage.setItem("cookieChoice", "accepted");
+            banner.style.display = "none";
+        }
+
+        // Reddet
+        rejectBtn.onclick = () => {
+            localStorage.removeItem("cookieChoice"); // sil → tekrar gelsin
+            banner.style.display = "none";
+        }
+
+
+
+
+
+
+
+        let total = 0;
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            total += price;
+
+            updateCart();
+        }
+
+        function updateCart() {
+            let list = document.getElementById("cart-items");
+            list.innerHTML = "";
+
+            cart.forEach(item => {
+                let li = document.createElement("li");
+                li.textContent = item.name + " - " + item.price + "₺";
+                list.appendChild(li);
+            });
+
+            document.getElementById("total").textContent = total;
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+
+        function toggleCart() {
+            let box = document.getElementById("cart-box");
+            box.classList.toggle("hidden");
+        }
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            let list = document.getElementById("cart-items");
+            list.innerHTML = "";
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+
+                let li = document.createElement("li");
+                li.innerHTML = `
+      ${item.name} - ${item.price}₺ 
+      <button onclick="removeFromCart(${index})">❌</button>
+                                          `;
+                list.appendChild(li);
+            });
+
+            document.getElementById("total").textContent = total;
+            document.getElementById("cart-count").textContent = cart.length;
+        }
+    </script>
+</body>
+
+</html>

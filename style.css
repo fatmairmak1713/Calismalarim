@@ -1,0 +1,297 @@
+/* GENEL */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: white;
+}
+
+/* ARKA PLAN ANİMASYON */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #050814, #0b0f1a, #111c33);
+  background-size: 600% 600%;
+  animation: move 12s ease infinite;
+  z-index: -1;
+}
+
+@keyframes move {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1e2a44;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* NAV BUTONLAR */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.hero h1 {
+  font-size: 50px;
+}
+
+.hero h2 {
+  color: #b8c7ff;
+}
+
+/* BUTON */
+.btn {
+  background: #1b2a4a;
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: white;
+  display: inline-block;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #24385f;
+}
+
+/* KÜÇÜK BUTON */
+.btn.small {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.btn.outline {
+  background: transparent;
+  border: 1px solid #3a4f7a;
+}
+
+.btn.outline:hover {
+  background: #1b2a4a;
+}
+
+/* LOGIN CENTER */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* CARD */
+.card {
+  width: 90%;
+  max-width: 350px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #1e2a44;
+}
+
+/* TOGGLE */
+.toggle {
+  display: flex;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #2c3e66;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.toggle button:hover {
+  background: #1b2a4a;
+}
+
+/* FORM */
+.form {
+  display: none;
+  flex-direction: column;
+}
+
+.form.active {
+  display: flex;
+}
+
+/* INPUT */
+input {
+  margin: 10px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #111c33;
+  color: white;
+  outline: none;
+}
+
+/* PASSWORD */
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  box-sizing: border-box;
+}
+
+.password-box span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* GENEL BUTON */
+button {
+  padding: 12px;
+  background: #1b2a4a;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #24385f;
+}
+
+/* ÜRÜNLER */
+.products {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  padding: 15px;
+}
+
+/* ÜRÜN KART */
+.card2 {
+  background: #0f1628;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #1e2a44;
+  transition: 0.3s;
+}
+
+.card2:hover {
+  transform: scale(1.03);
+  background: #121c33;
+}
+
+.card2 img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.img-box {
+  overflow: hidden;
+}
+
+.img-box img {
+  width: 100%;
+  transition: 0.3s;
+}
+
+.img-box:hover img {
+  transform: scale(1.2);
+}
+
+.features {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.stock {
+  font-size: 13px;
+  color: #8fff8f;
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.filters {
+  padding: 15px;
+}
+nav {
+  display:flex;
+  gap:15px;
+  padding:10px;
+}
+nav a {
+  color:white;
+  text-decoration:none;
+}
+.big-text { font-size:20px; }
+@media (max-width:600px){ .products { grid-template-columns: 1fr; } header { flex-direction: column; } }
+.card2 { transition: 0.3s; } .card2:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+.card2 img { filter: contrast(1.1) brightness(1.05); }
+.buy {
+  margin-top: 10px;
+  background: green;
+  color: white;
+  width: 100%;
+}
+.detail{
+  text-align:center;
+  padding:20px;
+}
+
+.detail img{
+  width:300px;
+  border-radius:10px;
+}
+.review button{
+  margin-left:10px;
+  background:red;
+  color:white;
+  border:none;
+  padding:5px;
+  border-radius:5px;
+  cursor:pointer;
+}

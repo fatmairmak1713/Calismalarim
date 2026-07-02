@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ürünler</title>
+
+<style>
+body{font-family:Arial;background:#0b0f1a;color:white;margin:0}
+header{padding:15px;background:#111c33;display:flex;justify-content:space-between;align-items:center}
+.products{display:flex;gap:15px;padding:20px}
+.card{background:#111c33;padding:15px;border-radius:10px;width:200px;cursor:pointer}
+button{margin-top:5px;padding:6px;border:none;border-radius:6px;cursor:pointer}
+.heart-active{transform:scale(1.3);transition:0.2s;color:red}
+</style>
+</head>
+
+<body onload="init()">
+
+<header>
+<h2>Gözlükler</h2>
+
+<div>
+<button onclick="goFav()">❤️ (<span id="favCount">0</span>)</button>
+<button onclick="goCart()">🛒 (<span id="cartCount">0</span>)</button>
+<button onclick="logout()">Çıkış</button>
+</div>
+</header>
+
+<div class="products">
+
+<div class="card">
+<h3>Modern</h3>
+<p>₺299</p>
+<button onclick="addToCart('p1','Modern',299)">🛒</button>
+<button onclick="addFav('p1','Modern',299,this)">❤️</button>
+</div>
+
+<div class="card">
+<h3>Spor</h3>
+<p>₺199</p>
+<button onclick="addToCart('p2','Spor',199)">🛒</button>
+<button onclick="addFav('p2','Spor',199,this)">❤️</button>
+</div>
+
+<div class="card">
+<h3>Klasik</h3>
+<p>₺399</p>
+<button onclick="addToCart('p3','Klasik',399)">🛒</button>
+<button onclick="addFav('p3','Klasik',399,this)">❤️</button>
+</div>
+
+</div>
+
+<script>
+
+function init(){
+  if(localStorage.getItem("loggedIn")!=="true"){
+    alert("Giriş gerekli");
+    window.location.href="login.html";
+  }
+  loadCounts();
+}
+
+function addToCart(id,name,price){
+  let cart=JSON.parse(localStorage.getItem("cart"))||[];
+  let item=cart.find(x=>x.id===id);
+  if(item){item.qty++;} else {cart.push({id,name,price,qty:1});}
+  localStorage.setItem("cart",JSON.stringify(cart));
+  loadCounts();
+}
+
+function addFav(id,name,price,btn){
+  if(localStorage.getItem("loggedIn")!=="true"){alert("login!");return;}
+
+  let favs=JSON.parse(localStorage.getItem("favs"))||[];
+  if(favs.find(x=>x.id===id)){alert("zaten var");return;}
+
+  favs.push({id,name,price});
+  localStorage.setItem("favs",JSON.stringify(favs));
+
+  btn.classList.add("heart-active");
+  setTimeout(()=>btn.classList.remove("heart-active"),300);
+
+  loadCounts();
+}
+
+function loadCounts(){
+  let favs=JSON.parse(localStorage.getItem("favs"))||[];
+  let cart=JSON.parse(localStorage.getItem("cart"))||[];
+
+  document.getElementById("favCount").textContent=favs.length;
+  document.getElementById("cartCount").textContent=cart.length;
+}
+
+function goCart(){location.href="cart.html";}
+function goFav(){location.href="favorites.html";}
+function logout(){localStorage.removeItem("loggedIn");location.href="login.html";}
+</script>
+
+</body>
+</html>

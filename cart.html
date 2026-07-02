@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sepetim</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b0f1a;
+  color:white;
+}
+
+header{
+  padding:15px;
+  background:#111c33;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.container{
+  padding:20px;
+}
+
+.item{
+  background:#111c33;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+button{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.remove{
+  background:red;
+  color:white;
+}
+
+.clear{
+  margin-top:20px;
+  background:#ff4444;
+  color:white;
+  width:100%;
+}
+
+.buy{
+  margin-top:10px;
+  background:#00c853;
+  color:white;
+  width:100%;
+}
+
+.total{
+  margin-top:20px;
+  font-size:20px;
+}
+
+.empty{
+  text-align:center;
+  opacity:0.6;
+  margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body onload="loadCart()">
+
+<header>
+  <h2>🛒 Sepetim</h2>
+  <button onclick="location.href='products.html'">← Geri</button>
+</header>
+
+<div class="container">
+
+  <div id="cartItems"></div>
+
+  <div class="total" id="total"></div>
+
+  <button class="clear" onclick="clearCart()">Sepeti Temizle</button>
+  <button class="buy" onclick="buyNow()">Satın Al 💳</button>
+
+</div>
+
+<script>
+
+/* 🛒 SEPETİ YÜKLE */
+function loadCart(){
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let div = document.getElementById("cartItems");
+  let total = 0;
+
+  div.innerHTML = "";
+
+  if(cart.length === 0){
+    div.innerHTML = "<p class='empty'>Sepet boş 🛒</p>";
+    document.getElementById("total").textContent = "Toplam: ₺0";
+    return;
+  }
+
+  cart.forEach((item,index)=>{
+
+    total += item.price;
+
+    div.innerHTML += `
+      <div class="item">
+        <span>${item.name} - ₺${item.price}</span>
+        <button class="remove" onclick="removeItem(${index})">Sil</button>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("total").textContent =
+    "Toplam: ₺" + total;
+}
+
+/* ❌ TEK ÜRÜN SİL */
+function removeItem(index){
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.splice(index,1);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCart();
+}
+
+/* 🧹 TEMİZLE */
+function clearCart(){
+
+  localStorage.removeItem("cart");
+
+  loadCart();
+}
+
+/* 💳 SATIN AL */
+function buyNow(){
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if(cart.length === 0){
+    alert("Sepet boş!");
+    return;
+  }
+
+  alert("Ödeme başarılı 🎉");
+
+  localStorage.removeItem("cart");
+
+  loadCart();
+}
+
+</script>
+
+</body>
+</html>
