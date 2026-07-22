@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rotob Süpürge - Ürün Tablosu</title>
+  <meta name="description" content="Rotob Süpürge ürün bilgileri ve teknik özellikleri. Basit ve temiz HTML tablo örneği." />
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#667085;
+      --accent:#2b6cb0;
+      --accent-2:#1d4ed8;
+      --success:#10b981;
+      --danger:#ef4444;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:980px;
+      margin:36px auto;
+      padding:20px;
+    }
+
+    header {
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .brand {
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:20px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.08);
+    }
+
+    h1{font-size:20px;margin:0}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 6px 24px rgba(16,24,40,0.06);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    thead th{
+      text-align:left;
+      padding:12px 12px;
+      border-bottom:1px solid #e6eef8;
+      color:#0b2545;
+      font-weight:600;
+    }
+
+    tbody td{
+      padding:12px;
+      vertical-align:middle;
+      border-bottom:1px dashed #f1f5f9;
+    }
+
+    .product-cell{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .thumb{
+      width:72px;
+      height:72px;
+      border-radius:8px;
+      background:#eef6ff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" fill="%23eef6ff"/></svg>') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 4px 12px rgba(16,24,40,0.04);
+      flex-shrink:0;
+    }
+
+    .product-title{font-weight:600}
+    .muted{color:var(--muted);font-size:13px}
+
+    .price { font-weight:700; color:var(--accent-2); font-size:16px; }
+    .old-price { color:var(--muted); text-decoration:line-through; margin-left:8px; font-weight:500; font-size:13px; }
+
+    .specs { font-size:13px; color:var(--muted); }
+
+    .actions { text-align:right; }
+
+    .btn {
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .btn-primary { background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:white; box-shadow:0 8px 18px rgba(29,78,216,0.12); }
+    .btn-ghost { background:transparent; color:var(--accent-2); border:1px solid rgba(29,78,216,0.08); }
+
+    .variant { display:inline-block; padding:6px 8px; border-radius:8px; background:#f1f5f9; font-size:13px; margin-right:6px; }
+
+    /* Responsive */
+    @media (max-width:680px){
+      .thumb{width:56px;height:56px}
+      thead th:nth-child(4), tbody td:nth-child(4) { display:none; } /* hide some columns on mobile */
+      .actions{ text-align:left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">R</div>
+      <div>
+
+        <a href="../index.html">Ana Sayfa</a>
+
+
+        <h1>Robot Süpürge - Ürün Listesi</h1>
+        <a href="../res/dori.png">Dori Resim </a>
+        <a href="../res/dori.png">Dori Aç</a>
+        <p class="lead">Basit ve erişilebilir HTML tablo örneği — açıklama, teknik özellik ve satın alma butonu içerir.</p>
+      </div>
+    </header>
+
+    <main class="card" role="main" aria-labelledby="product-table-heading">
+      <h2 id="product-table-heading" style="margin-top:0;font-size:15px">Ürün Bilgileri</h2>
+
+      <table aria-describedby="product-table-heading">
+        <thead>
+          <tr>
+            <th>Ürün</th>
+            <th>Özellikler</th>
+            <th>Fiyat</th>
+            <th>Stok / Renk</th>
+            <th style="text-align:right">İşlem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div class="thumb" role="img" aria-label="Rotob Süpürge burada ürün görseli">
+                  <!-- İstersen gerçek bir görsel URL'si buraya ekle -->
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 6h14v11H3z" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="19" cy="16" r="2" stroke="#1d4ed8" stroke-width="1.2"/>
+                    <path d="M7 6V4a2 2 0 0 1 2-2h3" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="product-title">Rotob Süpürge X200</div>
+                  <div class="muted">Akıllı robot elektrikli süpürge • 2000Pa emiş • App destekli</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="specs">
+              <div><strong>Batarya:</strong> 5200 mAh (120 dk çalışma)</div>
+              <div><strong>Filtre:</strong> HEPA H13</div>
+              <div><strong>Ağırlık:</strong> 3.2 kg</div>
+              <div><strong>Boyut:</strong> 35 x 35 x 9 cm</div>
+            </td>
+
+            <td>
+              <div class="price">₺3.499</div>
+              <div class="old-price">₺4.199</div>
+            </td>
+
+            <td>
+              <div><span class="variant">Stok: Var</span></div>
+              <div style="margin-top:6px">
+                <span class="variant">Siyah</span>
+                <span class="variant">Beyaz</span>
+              </div>
+            </td>
+
+            <td class="actions">
+              <button class="btn btn-primary" onclick="addToCart('Rotob Süpürge X200')">Sepete Ekle</button>
+              <button class="btn btn-ghost" onclick="openQuickView()">Hızlı İncele</button>
+            </td>
+          </tr>
+
+          <!-- İkinci örnek varyant satırı (opsiyonel) -->
+          <tr>
+            <td>
+              <div class="product-cell">
+                <div class="thumb" role="img" aria-label="Rotob Süpürge Pro görsel">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="2" y="5" width="14" height="11" rx="2" stroke="#1d4ed8" stroke-width="1.2"/>
+                    <circle cx="19" cy="15" r="2" stroke="#1d4ed8" stroke-width="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="product-title">Rotob Süpürge Pro X300</div>
+                  <div class="muted">Lidar + haritalama • 3000Pa • Su tankı opsiyonel</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="specs">
+              <div><strong>Batarya:</strong> 6400 mAh (180 dk çalışma)</div>
+              <div><strong>Filtre:</strong> HEPA H13</div>
+              <div><strong>Ek:</strong> Mop modu</div>
+            </td>
+
+            <td>
+              <div class="price">₺4.799</div>
+              <div class="old-price">₺5.399</div>
+            </td>
+
+            <td>
+              <div><span class="variant">Stok: Sınırlı</span></div>
+              <div style="margin-top:6px"><span class="variant">Gümüş</span></div>
+            </td>
+
+            <td class="actions">
+              <button class="btn btn-primary" onclick="addToCart('Rotob Süpürge Pro X300')">Sepete Ekle</button>
+              <button class="btn btn-ghost" onclick="openQuickView()">Hızlı İncele</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script>
+    // Basit, front-end demo fonksiyonları (sunucu yoksa sadece örnek davranış)
+    function addToCart(productName){
+      // Kullanıcı dostu kısa bildirim
+      alert(productName + " sepete eklendi (demo).");
+      // Gerçek uygulamada: fetch('/cart', { method:'POST', body: JSON.stringify({product: productName}) })
+    }
+
+    function openQuickView(){
+      // Basit hızlı inceleme demosu
+      alert("Hızlı inceleme: Ürün detay penceresi (demo).");
+    }
+  </script>
+</body>
+</html>

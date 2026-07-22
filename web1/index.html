@@ -1,0 +1,135 @@
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bağlantılar Hakkında Makale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        pre {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="baslik">Bağlantılar (Linkler) Nedir ve Nasıl Kullanılır?</h1>
+    <p><a href="https://www.tasarimkodlama.com/web-tasarimi/html/html-baglanti-anchor-etiketi-web-sayfalarina-etkilesim-verme">BAĞLANTILAR MAKALE</a></p>
+
+    <p>Web tasarımında bağlantılar, bir sayfadan başka bir sayfaya veya dosyaya geçişi sağlayan tıklanabilir metin, resim veya simgelerdir. HTML'de bağlantılar <code>&lt;a&gt;</code> etiketi ile oluşturulur.</p>
+
+    <h2 id="alt-baslik1">1. Sayfalar Arası Bağlantı</h2>
+    <pre>&lt;a href="hakkimizda.html"&gt;Hakkımızda Sayfasına Git&lt;/a&gt;</pre>
+
+    <h2 id="alt_baslik2">2. Alt Dizindeki Sayfaya Bağlantı</h2>
+    <p>Üst dizindeki sayfadan alt dizindeki bir sayfaya link vermek için dizin adını ekleriz:</p>
+    <pre>&lt;a href="sayfa/urun1.html"&gt;Alt Dizindeki Ürün Sayfasına Git&lt;/a&gt;</pre>
+
+    <h2 id="alt-baslik3">3. Üst Dizindeki Sayfaya Bağlantı</h2>
+    <p>Alt dizindeki bir sayfadan üst dizindeki ana sayfaya link vermek için <code>../</code> kullanılır:</p>
+    <pre>&lt;a href="../index.html"&gt;Üst Dizindeki Sayfaya Git&lt;/a&gt;</pre>
+
+    <h2 id="berfin">4. Harici Bağlantı</h2>
+    <pre>&lt;a href="https://www.google.com" target="_blank"&gt;Google'a Git&lt;/a&gt;</pre>
+
+    <h2 id="alt-baslik4">5. Dosya İndirme Bağlantısı</h2>
+    <pre>&lt;a href="dokuman.pdf" download&gt;PDF Dosyasını İndir&lt;/a&gt;</pre>
+
+    <h2 id="resim-baglanti">6. Resme Bağlantı Verme</h2>
+    <pre>&lt;a href="resim-buyuk.jpg"&gt;&lt;img src="resim.jpg" alt="Resim"&gt;&lt;/a&gt;</pre>
+
+    <h2>7. Videoya Bağlantı</h2>
+    <pre>&lt;a href="video.mp4"&gt;Videoyu İzle&lt;/a&gt;</pre>
+
+    <h2>8. Sayfa İçi Bağlantı</h2>
+    <pre>&lt;a href="#bolum1"&gt;Bölüme Git&lt;/a&gt;
+...
+&lt;h2 id="bolum1"&gt;Bölüm 1&lt;/h2&gt;</pre>
+
+    <h2>9. E-Posta Bağlantısı</h2>
+    <pre>&lt;a href="mailto:ornek@mail.com"&gt;E-posta Gönder&lt;/a&gt;</pre>
+
+    <h2>10. Telefon Numarasına Bağlantı</h2>
+    <pre>&lt;a href="tel:+905551112233"&gt;Bizi Ara&lt;/a&gt;</pre>
+
+
+    <h2>Özet</h2>
+    <p>Bağlantılar, web sayfalarını birbirine bağlamanın temel yoludur. Sayfalar arası, harici, dosya, resim, video, e-posta, telefon, üst dizin veya alt dizin bağlantıları ile kullanıcı deneyimi artırılabilir.</p>
+
+    <h2>Sayfa Bağlantısı Örnekleri:</h2>
+    <p>Örnekleri burada olacak</p>
+
+    <!-- ilk Örnek basit şekilde olabilir.-->
+     
+
+    <ul>
+        <li><a href="hakkimizda.html">Hakkımızda Sayfası</a></li>
+        <li><a href="blog.html">Blog Sayfası</a></li>
+        <li><a href="sayfa/urun1.html">Ürün 1</a></li>
+        <li><a href="sayfa/urun2.html">Ürün 2</a></li>
+        <li><a href="belge/ornek.pdf">Dosya</a></li>
+        <li><a href="belge/ornek.pdf" target="_blank">Dosya Yeni sekme</a></li>
+        <li><a href="res/dori.png">Resme Bak</a></li>
+        <li><a href="res/logo.png" target="_blank">Thy Logo </a></li>
+        <li><a href="https://www.w3schools.com/html/html5_intro.asp">w3schools</a></li>
+        <li><a href="https://www.eba.gov.tr/" target="_blank" >Eba</a></li>
+        <li><a href="mailto:mutisumeyra@gmail.com">Bana e-posta gönder</a></li>
+        <li><a href="tel:+905506573495">Telofon no</a></li>
+        <li><a href="#baslik">Başa Dön</a></li>
+        <li><a href="#alt-baslik1">Sayfalar Arası Bağlantı</a></li>
+        <li><a href="#alt_baslik2">alt dizindeki bağlantı</a></li>
+        <li><a href="#alt-baslik3">harici bağlantı</a></li>
+        <li><a href="#alt-baslik4">Dosya İndirme Bağlantısı</a></li>
+        <li><a href="#berfin">Harici Bağlantı</a></li>
+        <li><a href="#resim-baglanti">Resme Bağlantı Ekle</a></li>
+        <li><a href="belge/cities.csv">Belge Bağlantısı Ekle</a></li>
+        <li><a href="video/computer.mp4">Video Aç</a></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <footer>
+        <p>Hazırlayan: 11A Web Tasarım</p>
+    </footer>
+</body>
+</html>
